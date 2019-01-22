@@ -1,0 +1,93 @@
+{% if platform=='ev3' %}
+    {% extends "base_ev3.html" %}
+{% endif %}
+{% if platform=='pistorms' %}
+    {% extends "base_pistorms.html" %}
+{% endif %}
+
+{% block content %}
+<style>
+.dot {
+    height: 500px;
+    width: 500px;
+    background-color: green;
+    border-radius: 50%;
+    border: 2px;
+    display: inline-block;
+}
+</style>
+
+<span class="dot" id="circle_ui"></span>
+<p>Cursor position: <textarea id='position' rows='1' cols='20'>--</textarea></p>
+
+<script>
+    window.onload=startUp;
+    var x_last = 0;        // Last x-pixelcoordinate of touchpoint sent to robot
+    var y_last = 0;        // Last y-pixelcoordinate of touchpoint sent to robot
+    var x_center = 258;    // x-pixelcoordinate of center of touch interface
+    var y_center = 294;    // y-pixelcoordinate of center of touch interface
+    delta = 20;            // Minimun distance (px) to send data to robot
+
+    function startUp() {
+        var el = document.getElementById("circle_ui");
+        el.addEventListener("touchstart", handleStart, false);
+        el.addEventListener("touchend", handleEnd, false);
+        el.addEventListener("touchmove", handleMove, false);
+    }
+
+    function handleMove(evt) {
+        // Handle moving of touchpoint
+        evt.preventDefault();
+        var touches = evt.changedTouches;
+        var i = touches.length-1;
+        var x_touch = touches[i].pageX - x_center;
+        var y_touch = y_center - touches[i].pageY;
+        if (Math.abs(x_last - x_touch) > delta || 
+            Math.abs(y_last - y_touch) > delta) {
+            // Send data to robot
+            $.post('/touch_circle', {
+                x_touch: x_touch,
+                y_touch: y_touch
+            }).done(function(response) {
+                document.getElementById('position').innerHTML = response['position'];
+            }).fail(function() {
+                document.getElementById('position').innerHTML = 'fail';
+            });
+            // Save coordinates of last handled touch
+            x_last = x_touch;
+            y_last = y_touch;
+        } else {
+            document.getElementById('position').innerHTML = '[' + str(x_touch) + ',' + str(y_touch) + ']';
+        }
+    }
+ 
+    function handleEnd(evt) {
+        // Handle release of touch
+        evt.preventDefault();
+        stopMotor();
+    }
+
+    function handleStart(evt) {
+        // Handle start of touch
+        // Prevent scrolling page when touching circle-interface
+        evt.preventDefault();
+    }
+
+    function stopMotor() {
+        // Tell robot to stop motor
+        $.post('motor_stop', {
+            motor_action: 'stop'
+        }).done(function(reponse) {
+            document.getElementById('speed').innerHTML = response['speed'];
+        }).fail(function() {
+            document.getElementById('speed').innerHTML = response['speed'];
+        });
+    }
+
+    function stopButtonClick(){
+        window.motorOn = false;
+        stopMotor();
+    }
+
+</script>
+{% endblock %}

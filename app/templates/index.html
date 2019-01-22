@@ -1,0 +1,51 @@
+{% if platform=='ev3' %}
+    {% extends "base_ev3.html" %}
+{% endif %}
+{% if platform=='pistorms' %}
+    {% extends "base_pistorms.html" %}
+{% endif %}
+
+{% block content %}
+{% if platform=='ev3' %}
+    <h1>KSmRover for EV3</h1>
+    <h3>Hardware connections</h3>
+    <p>
+        Connect LargeMoter to INPUT_A (left) and INPUT_B (right).
+    </p>
+    <h2>Operation</h2>
+    <p>
+        Use the menu to go to the <b>touch</b>-page. The green dot works like a 
+        joystick: you can move your finger around. At the center the robot 
+        will stop, when you move your finger to the top, the robot will move 
+        formward. When you move your finger to the right, it will move that way.
+        You can adjust the driving speed by varying the distance between
+        your finger and the center of the dot.
+    </p>
+{% endif %}
+{% if platform=='pistorms' %}
+    <h1>KSmRover for PiStorms</h1>
+    <h2>Hardware connections</h2>
+    <p>
+        Connect LargeMoter to BAM1 (left) and BAM2 (right).
+        Make sure the picamera is connected to the Raspberr Pi and is enabled.
+    </p>
+    <h2>Operation</h2>
+    <p>
+        For <b>touch</b> interface:<br>
+        Use the menu to go to the <b>touch</b>-page. The green dot works like a 
+        joystick: you can move your finger around. At the center the robot 
+        will stop, when you move your finger to the top, the robot will move 
+        formward. When you move your finger to the right, it will move that way.
+        You can adjust the driving speed by varying the distance between
+        your finger and the center of the dot.
+        <br><br>
+        For <b>camera</b> interface:<br>
+        Use the menu to go to the <b>camera</b>-page. On this page you see a live
+        video-feed (when a picamera is attached to the pi). This video-feed
+        contains the same touch joystick steering capabilities. So by touching 
+        the video and point your finger into the direction you want to go, the
+        robot will drive in that direction.
+    </p>
+
+{% endif %}
+{% endblock %}

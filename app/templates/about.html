@@ -1,0 +1,41 @@
+{% if platform=='ev3' %}
+    {% extends "base_ev3.html" %}
+{% endif %}
+{% if platform=='pistorms' %}
+    {% extends "base_pistorms.html" %}
+{% endif %}
+
+{% block content %}
+<h1>Information</h1>
+KSmRover by Kees Smit
+
+{% if platform=='ev3' %}
+    <h2>Hardware</h2>
+    <p>
+        - LEGO Mindstorms EV3-brick<br>
+        - 2 LEGO LargeMotors
+    </p>
+    <h2>Software</h2>
+    <p>
+        - ev3dev operating system (<a href="https://www.ev3dev.org">www.ev3dev.org</a>)<br>
+        - Flask<br>
+        - KSmRover (<a href="https://github.com/kwsmit/KSmRover">github</a>)<br>
+    </p>
+{% endif %}
+{% if platform=='pistorms' %}
+    <h2>Hardware</h2>
+    <p>
+        - mindsensors.com PiStorms with Raspberry Pi<br>
+        - picamera<br>
+        - 2 LEGO LargeMotors<br>
+    </p>
+    <h2>Software</h2>
+    <p>
+        - ev3dev operating system (<a href="https://www.ev3dev.org" target="_blank">www.ev3dev.org</a>)<br>
+        - Flask<br>
+        - Picamera module<br>
+        - KSmRover (<a href="https://github.com/kwsmit/KSmRover" target="_blank">github</a>)<br>
+    </p>
+{% endif %}
+
+{% endblock %}
