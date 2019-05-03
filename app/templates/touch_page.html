@@ -8,8 +8,8 @@
 {% block content %}
 <style>
 .dot {
-    height: 500px;
-    width: 500px;
+    height: 800px;
+    width: 800px;
     background-color: green;
     border-radius: 50%;
     border: 2px;
@@ -24,9 +24,9 @@
     window.onload=startUp;
     var x_last = 0;        // Last x-pixelcoordinate of touchpoint sent to robot
     var y_last = 0;        // Last y-pixelcoordinate of touchpoint sent to robot
-    var x_center = 258;    // x-pixelcoordinate of center of touch interface
-    var y_center = 294;    // y-pixelcoordinate of center of touch interface
-    delta = 20;            // Minimun distance (px) to send data to robot
+    var x_center = 408;    // x-pixelcoordinate of center of touch interface 258
+    var y_center = 444;    // y-pixelcoordinate of center of touch interface 294
+    delta = 40;            // Minimun distance (px) to send data to robot 20
 
     function startUp() {
         var el = document.getElementById("circle_ui");
@@ -75,18 +75,13 @@
 
     function stopMotor() {
         // Tell robot to stop motor
-        $.post('motor_stop', {
+        $.post('/motor_stop', {
             motor_action: 'stop'
         }).done(function(reponse) {
             document.getElementById('speed').innerHTML = response['speed'];
         }).fail(function() {
             document.getElementById('speed').innerHTML = response['speed'];
         });
-    }
-
-    function stopButtonClick(){
-        window.motorOn = false;
-        stopMotor();
     }
 
 </script>

@@ -26,8 +26,8 @@
         evt.preventDefault();
         var touches = evt.changedTouches;
         var i = touches.length-1;
-        var x_touch = touches[i].pageX - x_center;
-        var y_touch = y_center - touches[i].pageY;
+        var x_touch = (touches[i].pageX - x_center);
+        var y_touch = (y_center - touches[i].pageY);
         if (Math.abs(x_last - x_touch) > delta || 
             Math.abs(y_last - y_touch) > delta) {
             // Send data to robot
@@ -50,8 +50,12 @@
     function handleEnd(evt) {
         // Handle release of touch
         evt.preventDefault();
-        motorOn = false;
+        // Stop motor
         stopMotor();
+        motorOn = false;
+        // Reset last touch positionss
+        x_last = 0;
+        y_last = 0;
     }
 
     function handleStart(evt) {
@@ -62,7 +66,7 @@
 
     function stopMotor() {
         // Tell robot to stop motor
-        $.post('motor_stop', {
+        $.post('/motor_stop', {
             motor_action: 'stop'
         }).done(function(reponse) {
             document.getElementById('speed').innerHTML = response['speed'];
