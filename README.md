@@ -17,6 +17,12 @@ $ sudo apt-get update
 $ sudo apt-get install python3-flask
 ```
 
+For developing this application, the Mega Flask tutorial of Miguel
+Grinberg was a great source. You can find it
+[here](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world).
+When you read this tutorial I'm sure you understand the
+structure of my application.
+
 On the robot you start the application by running:
 
 ```bash
@@ -53,7 +59,7 @@ robot will drive in that direction.
 
 
 You'll find more information (including a video) on my
-[website](https://kwsmit.github.io).
+[website](https://kwsmit.github.io/robot_projects/ksmrover.html).
 
 Have fun!
 
